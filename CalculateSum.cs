@@ -33,7 +33,7 @@ namespace SimpleCalculator
                 }
                 double firstConvertedNumber = Convert.ToDouble(firstNumber);
                 double secondConvertedNumber = Convert.ToDouble(secondNumber);
-                return new OkObjectResult($"The sum of {firstConvertedNumber} and {secondConvertedNumber} = {firstConvertedNumber + secondConvertedNumber}.");
+                return new OkObjectResult($"The sum of {firstConvertedNumber} and {secondConvertedNumber} = {firstConvertedNumber + secondConvertedNumber}!.");
             }
             catch
             {
