@@ -19,17 +19,26 @@ namespace SimpleCalculator
         {
             log.LogInformation("C# HTTP trigger function processed a request.");
 
-            string name = req.Query["name"];
+            string firstNumber = req.Query["firstNumber"];
+            string secondNumber = req.Query["secondNumber"];
 
             string requestBody = await new StreamReader(req.Body).ReadToEndAsync();
             dynamic data = JsonConvert.DeserializeObject(requestBody);
-            name = name ?? data?.name;
 
-            string responseMessage = string.IsNullOrEmpty(name)
-                ? "This HTTP triggered function executed successfully. Pass a name in the query string or in the request body for a personalized response."
-                : $"Hello, {name}. This HTTP triggered function executed successfully.";
-
-            return new OkObjectResult(responseMessage);
+            try
+            {
+                if (String.IsNullOrEmpty(firstNumber) || String.IsNullOrEmpty(secondNumber))
+                {
+                    return new OkObjectResult($"You did not enter anything to calculate.");
+                }
+                double firstConvertedNumber = Convert.ToDouble(firstNumber);
+                double secondConvertedNumber = Convert.ToDouble(secondNumber);
+                return new OkObjectResult($"The sum of {firstConvertedNumber} and {secondConvertedNumber} = {firstConvertedNumber + secondConvertedNumber}.");
+            }
+            catch
+            {
+                return new OkObjectResult($"You did not enter a valid number, you have entered {firstNumber} and {secondNumber} make sure you have used ',' to separate your decimals.");
+            }
         }
     }
 }
